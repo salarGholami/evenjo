@@ -1,26 +1,217 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* ========================= COLORS =========================  */
+  /* ======== Brand Colors ======== */
+
+  --color-main: #c14fe6;
+
+  /* light  */
+  --color-tint-100: #f1e3f6;
+  --color-tint-200: #efd2fc;
+  --color-tint-300: #e4aff8;
+  --color-tint-400: #d580f2;
+  --color-tint-500: #c14fe6;
+  --color-tint-600: #a62fca;
+
+  /* dark */
+  --color-shade-100: #721d88;
+  --color-shade-200: #551666;
+  --color-shade-300: #390e44;
+  --color-shade-400: #2b0b33;
+  --color-shade-500: #1c0722;
+  --color-shade-600: #0e0411;
+
+  /* ======== State Colors ======== */
+  /* error */
+  --color-error-100: #fbbab5;
+  --color-error-200: #f66359;
+  --color-error-300: #f44336;
+  --color-error-400: #941a13;
+  --color-error-500: #850d06;
+
+  /* warning */
+  --color-warning-100: #ffefbf;
+  --color-warning-200: #ffefbf;
+  --color-warning-300: #ff9800;
+  --color-warning-400: #994a00;
+
+  /* info */
+  --color-info-100: #c7edfc;
+  --color-info-200: #49a8f5;
+  --color-info-300: #2196f3;
+  --color-info-400: #0c4691;
+
+  /* sucess */
+  --color-success-100: #caebd7;
+  --color-success-200: #6bbe6e;
+  --color-success-300: #4caf50;
+  --color-success-400: #1b691e;
+
+  /* Neutral Colors */
+  --color-Neutral-100: #b3b3b3;
+  --color-Neutral-200: #999999;
+  --color-Neutral-300: #454545;
+  --color-Neutral-400: #363636;
+  --color-Neutral-500: #303030;
+  --color-Neutral-600: #242424;
+  --color-Neutral-700: #1f1f1f;
+  --color-Neutral-800: #1b1b1b;
+  --color-Neutral-900: #191919;
+  --color-Neutral-1000: #121212;
+
+  /* ========================= TYPOGRAPHY ==========================  */
+  /* font */
+  --font-sans: "InterVariable", ui-sans-serif, system-ui, sans-serif;
+
+  /* ========================= SPACING & RADIUS ==========================  */
+  /* spacing */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-7: 32px;
+  --spacing-8: 40px;
+  --spacing-9: 48px;
+  --spacing-10: 56px;
+  --spacing-11: 64px;
+  --spacing-12: 72px;
+  --spacing-13: 80px;
+  --spacing-14: 88px;
+  --spacing-15: 96px;
+  --spacing-16: 104px;
+  --spacing-17: 124px;
+
+  /* radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ======== Display Styles ======== */
+
+.Display1 {
+  @apply font-sans font-bold text-[50px];
+}
+.Display2 {
+  @apply font-sans font-bold text-[56px];
+}
+.Display3 {
+  @apply font-sans font-bold text-[62px];
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ======== Heather Styles ======== */
+
+.Heather1 {
+  @apply font-sans font-medium text-[24px];
+}
+.Heather2 {
+  @apply font-sans font-bold text-[24px];
+}
+.Heather3 {
+  @apply font-sans font-semibold text-[24px];
+}
+.Heather4 {
+  @apply font-sans font-bold text-[28px];
+}
+.Heather5 {
+  @apply font-sans font-semibold text-[28px];
+}
+.Heather6 {
+  @apply font-sans font-bold text-[32px];
+}
+.Heather7 {
+  @apply font-sans font-semibold text-[32px];
+}
+.Heather8 {
+  @apply font-sans font-bold text-[36px];
+}
+.Heather9 {
+  @apply font-sans font-semibold text-[36px];
+}
+.Heather10 {
+  @apply font-sans font-bold text-[40px];
+}
+.Heather11 {
+  @apply font-sans font-semibold text-[40px];
+}
+.Heather12 {
+  @apply font-sans font-bold text-[44px];
+}
+.Heather13 {
+  @apply font-sans font-semibold text-[44px];
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ======== Body Styles ======== */
+
+.Body1 {
+  @apply font-sans font-normal text-[10px];
+}
+.Body2 {
+  @apply font-sans font-normal text-[12px];
+}
+.Body3 {
+  @apply font-sans font-medium text-[12px];
+}
+.Body4 {
+  @apply font-sans font-normal text-[14px];
+}
+.Body5 {
+  @apply font-sans font-medium text-[14px];
+}
+.Body6 {
+  @apply font-sans font-normal text-[16px];
+}
+.Body7 {
+  @apply font-sans font-medium text-[16px];
+}
+.Body8 {
+  @apply font-sans font-bold text-[16px];
+}
+.Body9 {
+  @apply font-sans font-normal text-[18px];
+}
+.Body10 {
+  @apply font-sans font-medium text-[18px];
+}
+.Body11 {
+  @apply font-sans font-bold text-[18px];
+}
+.Body12 {
+  @apply font-sans font-normal text-[20px];
+}
+.Body13 {
+  @apply font-sans font-medium text-[20px];
+}
+.Body14 {
+  @apply font-sans font-bold text-[20px];
+}
+.Body15 {
+  @apply font-sans font-normal text-[22px];
+}
+.Body16 {
+  @apply font-sans font-medium text-[22px];
+}
+.Body16-bold {
+  @apply font-sans font-bold text-[22px];
+}
+
+/* ======== Button Styles ======== */
+.button1 {
+  @apply font-sans font-normal text-[16px];
+}
+
+/* ========================= ICONOGRAPHY ==========================  */
+/* ======== Icon Styles ======== */ 
+.icon-sm {
+  @apply w-4 h-4; /* 16px */
+}
+.icon-md {
+  @apply w-[18px] h-[18px];
+}
+.icon-lg {
+  @apply w-6 h-6; /* 24px */
 }
