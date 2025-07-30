@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-inter", // (اختیاری برای CSS variable)
-  weight: ["400", "700"], // انتخاب وزن‌های دلخواه
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
@@ -20,7 +21,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` ${inter.variable} antialiased`}>{children}</body>
+      <body className={` ${inter.variable} antialiased`}>
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

@@ -1,7 +1,9 @@
 @import "tailwindcss";
+/* @import 'flag-icon-css/css/flag-icon.min.css'; */
 
 body {
   background: #0D0D0D;
+  color: white;
   user-select: none;
 }
 
@@ -219,4 +221,26 @@ body {
 }
 .icon-lg {
   @apply w-6 h-6; /* 24px */
+}
+
+  /* app/globals.css یا styles/globals.css */
+
+.link-active-glow {
+  position: relative;
+  color: #fff;
+}
+
+.link-active-glow::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180%;
+  height: 220%;
+  background: radial-gradient(ellipse at center top, var(--color-tint-500), transparent 70%);
+  filter: blur(25px);
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 9999px;
 }
