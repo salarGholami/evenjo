@@ -24,7 +24,7 @@ export default function CountrySelect({ options, value, onChange }: Props) {
           const selected = options.find((c) => c.code === e.target.value);
           if (selected) onChange(selected);
         }}
-        className="appearance-none bg-transparent pr-6 pl-8 py-1 rounded-md hover:bg-Neutral-700  cursor-pointer text-sm text-white"
+        className="appearance-none bg-transparent pr-6 text-xs pl-6 py-1 rounded-md hover:bg-Neutral-700  cursor-pointer  text-white"
         style={{ WebkitAppearance: "none" }}
       >
         {options.map((country) => (
@@ -39,7 +39,7 @@ export default function CountrySelect({ options, value, onChange }: Props) {
       </select>
 
       {/* Flag overlay */}
-      <div className="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none">
+      <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none">
         <Image
           src={value.flag}
           alt={value.code}

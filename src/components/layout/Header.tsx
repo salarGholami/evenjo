@@ -79,7 +79,7 @@ function Auth() {
     return (
       <div className="flex items-center">
         {/* Language Selector */}
-        <div className="flex items-center gap-1 cursor-pointer px-2 py-1 rounded-md">
+        <div className="flex items-center cursor-pointer px-2 py-1 rounded-md">
           <CountrySelect
             options={countries}
             value={selected}
@@ -100,7 +100,7 @@ function Auth() {
               console.log("login btn clicked");
             }}
           >
-            login
+            Login
           </Button>
         </div>
       </div>
