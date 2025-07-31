@@ -1,42 +1,56 @@
 "use client";
+import FilterSearch from "@/components/ui/FilterSearch/FilterSearch";
+import { Dribbble, MapPin, Calendar, DollarSign } from "lucide-react";
 
-import React from "react";
-import { useForm, FormProvider } from "react-hook-form";
-import { toast } from "react-hot-toast";
-import RHFTextField from "@/components/ui/Input/input";
-
-type FormValues = {
-  username: string;
-};
-
-export default function Home() {
-  const methods = useForm<FormValues>({
-    defaultValues: {
-      username: "",
+const Page = () => {
+  const fields = [
+    {
+      name: "category",
+      label: "What",
+      icon: <Dribbble size={16} />,
+      options: [
+        { label: "Sport", value: "sport" },
+        { label: "Music", value: "music" },
+      ],
     },
-  });
+    {
+      name: "location",
+      label: "Where",
+      icon: <MapPin size={16} />,
+      options: [
+        { label: "Texas", value: "texas" },
+        { label: "California", value: "california" },
+      ],
+    },
+    {
+      name: "time",
+      label: "When",
+      icon: <Calendar size={16} />,
+      options: [
+        { label: "This weekend", value: "this_weekend" },
+        { label: "Next month", value: "next_month" },
+      ],
+    },
+    {
+      name: "price",
+      label: "Price",
+      icon: <DollarSign size={16} />,
+      options: [
+        { label: "$200", value: "200" },
+        { label: "$500", value: "500" },
+      ],
+    },
+  ];
 
-  const onSubmit = (data: FormValues) => {
-    toast.success(`Submitted: ${data.username}`);
+  const handleSearch = (filters: Record<string, string>) => {
+    console.log(filters);
   };
 
   return (
-    <div className="container xl:max-w-screen-xl mx-auto px-4 py-8">
-      <FormProvider {...methods}>
-        <form
-          onSubmit={methods.handleSubmit(onSubmit)}
-          className="max-w-md space-y-6 p-6 rounded-xl shadow"
-        >
-          <RHFTextField
-            name="label"
-            label="Label"
-            maxLength={20}
-            showCharCount={true}
-            type="text"
-            placeholder="placeholder"
-          />
-        </form>
-      </FormProvider>
+    <div className="max-w-5xl mx-auto mt-10">
+      <FilterSearch fields={fields} onSearch={handleSearch} />
     </div>
   );
-}
+};
+
+export default Page;
