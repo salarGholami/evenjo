@@ -30,7 +30,7 @@ const countries = [
 const Header = (props: Props) => {
   const pathname = usePathname();
   return (
-    <header className="z-10 bg-inherit sticky top-0 transition-all duration-200">
+    <header className="z-10 bg-transparent sticky top-0 transition-all duration-200">
       <nav className="container xl:max-w-screen-xl mx-auto">
         <ul className="flex items-center justify-between py-2">
           <li>

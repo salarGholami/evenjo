@@ -12,8 +12,8 @@ const navLinks = [
 
 const Footer = (props: Props) => {
   return (
-    <footer className="z-10 bg-inherit relative bottom-0 transition-all duration-200">
-      <nav className="container xl:max-w-screen-xl mx-auto flex justify-center items-center flex-col">
+    <footer className="z-10 bg-inherit relative bottom-0 transition-all duration-200 pt-5 ">
+      <nav className="container xl:max-w-screen-xl mx-auto flex justify-center items-center flex-col gap-5">
         <div className="">
           <Image
             src="/images/logo/Evenjo.png"
@@ -40,10 +40,16 @@ const Footer = (props: Props) => {
           </ul>
         </div>
         <div className="flex gap-6">
-          <Facebook  className="bg-white w-8 h-8 p-2 rounded-full flex justify-center items-center cursor-pointer text-neutral-700"/>
-          <Instagram  className="bg-white w-8 h-8 p-2 rounded-full flex justify-center items-center cursor-pointer text-neutral-700"/>
-          <Linkedin  className="bg-white w-8 h-8 p-2 rounded-full flex justify-center items-center cursor-pointer text-neutral-700"/>
-          <Youtube  className="bg-white w-8 h-8 p-2 rounded-full flex justify-center items-center cursor-pointer text-neutral-700"/>
+          <Facebook className="bg-white w-8 h-8 p-2 rounded-full flex justify-center items-center cursor-pointer text-neutral-700" />
+          <Instagram className="bg-white w-8 h-8 p-2 rounded-full flex justify-center items-center cursor-pointer text-neutral-700" />
+          <Linkedin className="bg-white w-8 h-8 p-2 rounded-full flex justify-center items-center cursor-pointer text-neutral-700" />
+          <Youtube className="bg-white w-8 h-8 p-2 rounded-full flex justify-center items-center cursor-pointer text-neutral-700" />
+        </div>
+
+        <div className="py-4 border-t w-full border-neutral-600">
+          <p className="text-center text-sm text-neutral-500">
+            CopyRight &copy; {new Date().getFullYear()} Salar Gholami.
+          </p>
         </div>
       </nav>
     </footer>
