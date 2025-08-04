@@ -1,31 +1,30 @@
 import React from "react";
-import styles from "./Button.module.css";
 import clsx from "clsx";
+import styles from "./Button.module.css";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "stroke";
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
-  onClick: () => void;
+  className?: string; 
 }
 
 export default function Button({
-  onClick,
   children,
   variant = "primary",
   leftIcon,
   rightIcon,
+  className,
   ...props
 }: ButtonProps) {
   const baseClass = styles["btn-base"];
   const variantClass = styles[`btn-${variant}`];
-  
-  const handleClick = () => {
-    console.log("Clicked!");
-  };
 
   return (
-    <button className={clsx(baseClass, variantClass)} {...props} onClick={handleClick}>
+    <button
+      {...props}
+      className={clsx(baseClass, variantClass, className)} 
+    >
       {leftIcon && <span className={styles["btn-icon-left"]}>{leftIcon}</span>}
       {children && <span>{children}</span>}
       {rightIcon && (

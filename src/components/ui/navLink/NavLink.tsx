@@ -18,8 +18,7 @@ export default function NavLink({ path, children }: NavLinkProps) {
       href={path}
       className={clsx(
         "transition-colors duration-200 hover:text-tint-400",
-          isActive ? "radial-gradient font-semibold" : "text-neutral-200" 
-          
+        isActive ? "radial-gradient font-semibold" : "text-neutral-200"
       )}
     >
       {children}

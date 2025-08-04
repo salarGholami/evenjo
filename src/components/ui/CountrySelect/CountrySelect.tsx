@@ -1,10 +1,12 @@
 "use client";
 
-import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import { ChevronDown } from "lucide-react";
+import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
 
 type Country = {
-  code: string;
+  code?: string;
   label: string;
   flag: string;
 };
@@ -16,43 +18,87 @@ type Props = {
 };
 
 export default function CountrySelect({ options, value, onChange }: Props) {
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleSelect = (code: string) => {
+    const selected = options.find((c) => c.code === code);
+    if (selected) {
+      onChange(selected);
+      setIsOpen(false);
+    }
+  };
+
   return (
-    <div className="relative inline-block text-left">
-      <select
-        value={value.code}
-        onChange={(e) => {
-          const selected = options.find((c) => c.code === e.target.value);
-          if (selected) onChange(selected);
-        }}
-        className="appearance-none bg-transparent pr-6 text-xs pl-6 py-1 rounded-md hover:bg-Neutral-700  cursor-pointer  text-white"
-        style={{ WebkitAppearance: "none" }}
+    <div ref={containerRef} className="relative text-sm text-white">
+      {/* Trigger Button */}
+      <button
+        type="button"
+        className="w-full flex items-center justify-between border border-neutral-700 rounded-md px-3 py-2 hover:bg-neutral-700 transition"
+        onClick={() => setIsOpen((prev) => !prev)}
       >
-        {options.map((country) => (
-          <option
-            key={country.code}
-            value={country.code}
-            className="text-black bg-tint-100"
-          >
-            {country.label}
-          </option>
-        ))}
-      </select>
-
-      {/* Flag overlay */}
-      <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none">
-        <Image
-          src={value.flag}
-          alt={value.code}
-          width={20}
-          height={14}
-          className="rounded-sm"
+        <div className="flex items-center gap-2">
+          <Image
+            src={value.flag}
+            alt={value.label}
+            width={20}
+            height={14}
+            className="rounded-sm"
+          />
+          <span className="truncate hidden sm:block">{value.label}</span>
+        </div>
+        <ChevronDown
+          size={16}
+          className={`transition-transform duration-300 ${
+            isOpen ? "rotate-180" : ""
+          }`}
         />
-      </div>
+      </button>
 
-      {/* Chevron overlay */}
-      <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-        <ChevronDown size={14} className="text-white" />
-      </div>
+      {/* Dropdown List */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.ul
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+            className="absolute w-full bg-neutral-800 border border-neutral-700 rounded-md shadow-md mt-2 z-50 overflow-hidden"
+          >
+            {options.map((country) => (
+              <li
+                key={country.code}
+                onClick={() => handleSelect(country.code!)}
+                tabIndex={0}
+                className="flex items-center gap-2 px-3 py-2 cursor-pointer transition-colors duration-200 hover:bg-tint-500 focus:bg-tint-500 focus:outline-none"
+              >
+                <Image
+                  src={country.flag}
+                  alt={country.label}
+                  width={20}
+                  height={14}
+                  className="rounded-sm"
+                />
+                <span className="truncate">{country.label}</span>
+              </li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
