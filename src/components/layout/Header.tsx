@@ -30,8 +30,6 @@ const countries: Country[] = [
   { code: "JP", label: "JPY", flag: "https://flagcdn.com/jp.svg" },
 ];
 
-const user = 0;
-
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
@@ -97,7 +95,7 @@ export default function Header() {
               onChange={() => {}}
             />
             <button
-              onClick={() => router.push("/login")}
+              onClick={() => router.push("/register")}
               className="px-4 py-2 bg-tint-500 rounded-md text-white font-medium hover:bg-tint-600 transition"
             >
               Register

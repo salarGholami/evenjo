@@ -20,8 +20,8 @@ export default function NotFound() {
           {/* محتوای متنی وسط‌چین شده */}
           <div className="flex mt-12 items-center flex-col h-full text-center">
             <p className="text-xl max-w-sm text-white/80 drop-shadow">
-              Oops! The page you're looking for doesn't exist or may have been
-              moved.
+              Oops! The page you&apos;re looking for doesn&apos;t exist or may
+              have been moved.
             </p>
 
             <Link

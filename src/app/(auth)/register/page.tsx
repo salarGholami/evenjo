@@ -1,43 +1,66 @@
-import LoginForm from "../login/LoginForm";
+"use client";
 
-const backgrounds = [
-  {
-    src: "/images/background/light.png",
-    alt: "light background",
-    className:
-      "absolute -top-[910px] inset-0 z-0 flex justify-center items-center rounded-full",
-  },
-  {
-    src: "/images/background/overlay.png",
-    alt: "overlay background",
-    className:
-      "absolute -top-[380px] left-96 inset-0 z-0 flex justify-center items-center rounded-full",
-  },
-  {
-    src: "/images/background/overlay.png",
-    alt: "overlay background",
-    className:
-      "absolute -top-[380px] inset-0 z-0 flex justify-center items-center rounded-full",
-  },
-  {
-    src: "/images/background/overlay.png",
-    alt: "overlay background",
-    className:
-      "absolute -top-[380px] -left-96 inset-0 z-0 flex justify-center items-center rounded-full",
-  },
-];
+import Image from "next/image";
+import RegisterForm from "./RegisterForm";
+import { RegisterFormValues } from "./registerSchema";
 
 export default function LoginPage() {
-  return (
-    <div className="w-full overflow-hidden relative">
-      {backgrounds.map(({ src, alt, className }, index) => (
-        <div key={index} className={className}>
-          <img src={src} alt={alt} />
-        </div>
-      ))}
+  const handleRegister = (data: RegisterFormValues) => {
+    console.log("User registered:", data);
+  };
 
-      <div className="relative z-10 flex justify-center">
-        <LoginForm />
+  return (
+    <div className="w-full overflow-hidden min-h-screen">
+      {/* بک‌گراند کامل */}
+      <div className="absolute -top-[1050px] md:-top-[1550px] inset-0 z-0 flex justify-center items-center">
+        <div className="relative w-full h-full rounded-full">
+          <Image
+            src="/images/background/light.png"
+            alt="light background"
+            fill
+            className=" absolute inset-0"
+          />
+        </div>
+      </div>
+
+      <div className="flex">
+        <div className="absolute -top-[380px] left-96 inset-0 z-0 flex justify-center items-center">
+          <div className="relative w-[600px] h-[600px] rounded-full">
+            <Image
+              src="/images/background/overlay.png"
+              alt="overlay background"
+              fill
+              className="object-contain"
+            />
+          </div>
+        </div>
+
+        <div className="absolute -top-[380px] inset-0 z-0 flex justify-center items-center">
+          <div className="relative w-[600px] h-[600px] rounded-full">
+            <Image
+              src="/images/background/overlay.png"
+              alt="overlay background"
+              fill
+              className="object-contain"
+            />
+          </div>
+        </div>
+
+        <div className="absolute -top-[380px] -left-96 inset-0 z-0 flex justify-center items-center">
+          <div className="relative w-[600px] h-[600px] rounded-full">
+            <Image
+              src="/images/background/overlay.png"
+              alt="overlay background"
+              fill
+              className="object-contain"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* محتوای روی بک‌گراند */}
+      <div className="relative z-10 flex justify-center items-center min-h-screen">
+        <RegisterForm onSubmit={handleRegister} />
       </div>
     </div>
   );

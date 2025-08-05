@@ -1,70 +1,104 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useForm, FormProvider } from "react-hook-form";
+import { FormProvider, useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Image from "next/image";
+import * as yup from "yup";
+import RHFTextField from "@/components/ui/Input/RHFTextField";
 import { Apple, Facebook } from "lucide-react";
 
-import { loginSchema, LoginFormValues, TabType } from "./validation";
-import RHFTextField from "@/components/ui/Input/RHFTextField";
+export interface RegisterFormValues {
+  fullName: string;
+  type: "email" | "phone";
+  email: string;
+  phone: string;
+  password: string;
+  confirmPassword: string;
+}
 
-export default function LoginForm({
-  onSubmit,
-}: {
-  onSubmit?: (data: LoginFormValues) => void;
-}) {
-  const [tab, setTab] = useState<TabType>("email");
+const registerSchema = yup.object({
+  fullName: yup.string().required("Full Name is required"),
+  type: yup.mixed<"email" | "phone">().oneOf(["email", "phone"]).required(),
+  email: yup.string().email("Invalid email").required("Email is required"),
+  phone: yup.string().required("Phone is required"),
+  password: yup
+    .string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password")], "Passwords must match")
+    .required("Confirm Password is required"),
+});
 
-  const methods = useForm<LoginFormValues>({
-    resolver: yupResolver(loginSchema),
+interface Props {
+  onSubmit?: (data: RegisterFormValues) => void;
+}
+
+export default function RegisterForm({ onSubmit }: Props) {
+  const [tab, setTab] = useState<"email" | "phone">("email");
+
+  const methods = useForm<RegisterFormValues>({
+    resolver: yupResolver(registerSchema),
     mode: "onChange",
     defaultValues: {
+      fullName: "",
+      type: "email",
       email: "",
       phone: "",
       password: "",
-      type: tab,
+      confirmPassword: "",
     },
   });
-
-  useEffect(() => {
-    methods.reset(
-      {
-        email: "",
-        phone: "",
-        password: "",
-        type: tab,
-      },
-      { keepErrors: true }
-    );
-  }, [tab, methods]);
 
   const {
     handleSubmit,
     formState: { isValid, isSubmitting },
+    reset,
   } = methods;
+
+  useEffect(() => {
+    reset({
+      fullName: "",
+      type: tab,
+      email: "",
+      phone: "",
+      password: "",
+      confirmPassword: "",
+    });
+  }, [tab, reset]);
+
+  const onSubmitHandler: SubmitHandler<RegisterFormValues> = (data) => {
+    onSubmit?.(data);
+  };
 
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={handleSubmit((data) => onSubmit?.(data))}
+        onSubmit={handleSubmit(onSubmitHandler)}
         className="w-full max-w-sm text-white my-12 md:my-10 p-6"
         noValidate
       >
+        {/* لوگو */}
         <div className="flex justify-center mb-2">
           <Image
             src="/images/logo/Evenjo.png"
             alt="Logo"
             width={100}
             height={100}
+            priority
           />
         </div>
 
-        <p className="mb-8 md:mb-5 text-center text-neutral-400 text-sm">
-          Please enter your {tab === "email" ? "email" : "phone number"}
+        {/* توضیح */}
+        <p className="mb-5 text-center text-neutral-400 text-sm">
+          Please enter your {tab === "email" ? "email" : "phone number"} and
+          details
         </p>
 
-        <div className="flex justify-center mb-8 bg-neutral-900 rounded-md">
+        {/* تب انتخاب ایمیل یا شماره */}
+        <div className="flex justify-center mb-8 bg-neutral-900 p-1 rounded-md">
           {(["email", "phone"] as const).map((t) => (
             <button
               key={t}
@@ -81,7 +115,29 @@ export default function LoginForm({
           ))}
         </div>
 
+        {/* فیلدها */}
         <div className="space-y-4">
+          <div className="flex gap-4">
+            <RHFTextField
+              name="Name"
+              label="Name"
+              placeholder="Enter name"
+              type="text"
+              maxLength={50}
+              showCharCount
+              iconMode="none"
+            />
+            <RHFTextField
+              name="lastName"
+              label="LastName"
+              placeholder="Enter last name"
+              type="text"
+              maxLength={50}
+              showCharCount
+              iconMode="none"
+            />
+          </div>
+
           {tab === "email" ? (
             <RHFTextField
               name="email"
@@ -93,14 +149,15 @@ export default function LoginForm({
               iconMode="auto"
               iconSize={20}
               iconColor="#fff"
+              autoComplete="email"
             />
           ) : (
             <RHFTextField
               name="phone"
               label="Phone Number"
-              placeholder="(912)1234567"
+              placeholder="(938)8454689"
               type="tel"
-              maxLength={10}
+              maxLength={12}
               showCharCount
               iconMode="auto"
               iconSize={20}
@@ -119,23 +176,24 @@ export default function LoginForm({
             iconMode="auto"
             iconSize={20}
             iconColor="#fff"
+            autoComplete="new-password"
+          />
+
+          <RHFTextField
+            name="confirmPassword"
+            label="Confirm Password"
+            placeholder="Re-enter your password"
+            type="password"
+            maxLength={20}
+            showCharCount
+            iconMode="auto"
+            iconSize={20}
+            iconColor="#fff"
+            autoComplete="new-password"
           />
         </div>
 
-        <div className="flex justify-between text-sm text-neutral-400 my-2 mb-8">
-          <label className="flex items-center gap-2 cursor-pointer select-none">
-            <input type="checkbox" className="accent-purple-500" />
-            Remember me
-          </label>
-          <button
-            type="button"
-            className="hover:text-white"
-            onClick={() => alert("Forgot password not implemented yet")}
-          >
-            Forgot password?
-          </button>
-        </div>
-
+        {/* دکمه ثبت */}
         <button
           type="submit"
           disabled={!isValid || isSubmitting}
@@ -145,13 +203,14 @@ export default function LoginForm({
               : "bg-purple-500 hover:bg-purple-600"
           }`}
         >
-          Log in
+          {isSubmitting ? "Submitting..." : "Register"}
         </button>
 
+        {/* لینک لاگین */}
         <p className="mt-4 text-center text-xs text-neutral-400">
-          New to Evenjo?{" "}
-          <a href="/register" className="text-purple-400 hover:underline">
-            Create account
+          Already have an account?{" "}
+          <a href="/login" className="text-purple-400 hover:underline">
+            Log in
           </a>
         </p>
 

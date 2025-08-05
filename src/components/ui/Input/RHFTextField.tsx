@@ -1,14 +1,13 @@
 "use client";
 
 import { Eye, EyeOff, Lock, Mail, Search, ChevronDown } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, ReactNode } from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import clsx from "clsx";
-import { ReactNode } from "react";
 import { CountryCode, isValidPhoneNumber } from "libphonenumber-js";
 import * as Flags from "country-flag-icons/react/3x2";
 
-export type InputType = "text" | "password" | "email" | "search" | "phone";
+export type InputType = React.HTMLInputTypeAttribute;
 export type IconMode = "auto" | "none" | "custom";
 export type SizeType = "sm" | "md";
 
@@ -26,6 +25,7 @@ export type RHFTextFieldProps = {
   iconColor?: string;
   disabled?: boolean;
   readOnly?: boolean;
+  autoComplete?: string;
 };
 
 const countries = [
@@ -50,8 +50,9 @@ export default function RHFTextField({
   iconColor = "#fff",
   disabled,
   readOnly,
+  autoComplete,
 }: RHFTextFieldProps) {
-  const { control, formState, getFieldState, watch } = useFormContext();
+  const { control, formState, watch } = useFormContext();
   const errorFromForm = formState.errors[name]?.message as string | undefined;
   const [showPassword, setShowPassword] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -64,7 +65,6 @@ export default function RHFTextField({
   useEffect(() => {
     const selectedCountry = countries.find((c) => c.code === country);
     if (!selectedCountry) return;
-
     if (fullValue.startsWith(selectedCountry.dialCode)) {
       setLocalNumber(fullValue.slice(selectedCountry.dialCode.length));
     } else {
@@ -135,7 +135,7 @@ export default function RHFTextField({
           const valueLength = localNumber.length;
           const hasError = !!errorFromForm;
           const isValid =
-            type === "phone"
+            type === "tel"
               ? isValidPhoneNumber(field.value || "")
               : !hasError && !!field.value;
           const showGreen = isFocused && isValid;
@@ -161,16 +161,13 @@ export default function RHFTextField({
                   sizeClasses[size]
                 )}
               >
-                {type === "phone" && selectedCountry ? (
+                {type === "tel" && selectedCountry ? (
                   <>
                     <button
                       type="button"
                       onClick={() => setShowDropdown((prev) => !prev)}
                       className="flex items-center gap-1 px-2 py-1 rounded-md text-white/80 hover:bg-neutral-800"
                       tabIndex={-1}
-                      aria-haspopup="listbox"
-                      aria-expanded={showDropdown}
-                      aria-label="Select country code"
                     >
                       {FlagComponent && (
                         <FlagComponent className="w-5 h-4 rounded-sm" />
@@ -201,14 +198,13 @@ export default function RHFTextField({
                         setIsFocused(false);
                         field.onBlur();
                       }}
+                      autoComplete={autoComplete}
                     />
 
                     {showDropdown && (
                       <div
                         ref={dropdownRef}
                         className="absolute z-50 top-full mt-1 left-0 w-full bg-neutral-900 border border-neutral-700 rounded-md max-h-60 overflow-y-auto shadow-lg"
-                        role="listbox"
-                        tabIndex={-1}
                       >
                         {countries.map((c) => {
                           const Flag = Flags[c.code as CountryCode];
@@ -251,6 +247,7 @@ export default function RHFTextField({
                         setIsFocused(false);
                         field.onBlur();
                       }}
+                      autoComplete={autoComplete}
                     />
                     {type === "password" && (
                       <button

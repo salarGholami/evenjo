@@ -64,6 +64,7 @@ const FilterSearch: React.FC<FilterSearchProps> = ({ fields, onSearch }) => {
   };
 
   const selectedTags = Object.entries(filters)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .filter(([_, value]) => value)
     .map(([key, value]) => ({
       name: key,
