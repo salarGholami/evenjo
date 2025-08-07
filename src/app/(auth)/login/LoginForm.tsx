@@ -8,6 +8,7 @@ import { Apple, Facebook } from "lucide-react";
 
 import { loginSchema, LoginFormValues, TabType } from "./validation";
 import RHFTextField from "@/components/ui/Input/RHFTextField";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm({
   onSubmit,
@@ -15,6 +16,7 @@ export default function LoginForm({
   onSubmit?: (data: LoginFormValues) => void;
 }) {
   const [tab, setTab] = useState<TabType>("email");
+  const router = useRouter();
 
   const methods = useForm<LoginFormValues>({
     resolver: yupResolver(loginSchema),
@@ -48,7 +50,7 @@ export default function LoginForm({
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit((data) => onSubmit?.(data))}
-        className="w-full max-w-sm text-white my-12 md:my-10 p-6"
+        className="w-full text-white "
         noValidate
       >
         <div className="flex justify-center mb-2">
@@ -61,10 +63,11 @@ export default function LoginForm({
         </div>
 
         <p className="mb-8 md:mb-5 text-center text-neutral-400 text-sm">
-          Please enter your {tab === "email" ? "email" : "phone number"}
+          Please enter your {tab === "email" ? "email" : "phone number"} to
+          login
         </p>
 
-        <div className="flex justify-center mb-8 bg-neutral-900 rounded-md">
+        <div className="flex justify-center mb-8 bg-neutral-900 rounded-md p-1">
           {(["email", "phone"] as const).map((t) => (
             <button
               key={t}
@@ -124,13 +127,13 @@ export default function LoginForm({
 
         <div className="flex justify-between text-sm text-neutral-400 my-2 mb-8">
           <label className="flex items-center gap-2 cursor-pointer select-none">
-            <input type="checkbox" className="accent-purple-500" />
+            <input type="checkbox" className="accent-tint-500" />
             Remember me
           </label>
           <button
             type="button"
             className="hover:text-white"
-            onClick={() => alert("Forgot password not implemented yet")}
+            onClick={() => router.push("/forgot-password")}
           >
             Forgot password?
           </button>
@@ -141,8 +144,8 @@ export default function LoginForm({
           disabled={!isValid || isSubmitting}
           className={`w-full rounded-md py-3 font-semibold transition-colors ${
             !isValid || isSubmitting
-              ? "bg-purple-700 cursor-not-allowed"
-              : "bg-purple-500 hover:bg-purple-600"
+              ? "bg-tint-600 cursor-not-allowed"
+              : "bg-tint-500 hover:bg-tint-600"
           }`}
         >
           Log in
@@ -150,7 +153,7 @@ export default function LoginForm({
 
         <p className="mt-4 text-center text-xs text-neutral-400">
           New to Evenjo?{" "}
-          <a href="/register" className="text-purple-400 hover:underline">
+          <a href="/register" className="text-tint-400 hover:underline">
             Create account
           </a>
         </p>

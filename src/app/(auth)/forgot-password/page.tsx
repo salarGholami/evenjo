@@ -1,16 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import RegisterForm from "./RegisterForm";
-import { RegisterFormValues } from "./registerSchema";
+import ForgotPasswordForm from "./components/ForgotPasswordForm";
 
-export default function LoginPage() {
-  const handleRegister = (data: RegisterFormValues) => {
-    console.log("User registered:", data);
-  };
-
+export default function ForgotPasswordPage() {
   return (
-  <div className="w-full overflow-hidden min-h-screen flex justify-center items-center">
+    <div className="w-full overflow-hidden min-h-screen flex justify-center items-center">
       {/* بک‌گراند کامل */}
       <div className="absolute -top-[1050px] md:-top-[650px] inset-0 z-0 flex justify-center items-center">
         <div className="relative w-full h-[700px] rounded-full">
@@ -60,7 +55,7 @@ export default function LoginPage() {
 
       {/* محتوای روی بک‌گراند */}
       <div className="relative z-10 flex justify-center min-h-screen mt-10 md:mt-12">
-        <RegisterForm onSubmit={handleRegister} />
+        <ForgotPasswordForm />
       </div>
     </div>
   );

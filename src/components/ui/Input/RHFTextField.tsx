@@ -116,9 +116,9 @@ export default function RHFTextField({
       <label
         htmlFor={name}
         className={clsx(
-          "text-sm absolute -top-0.5 left-3 transform -translate-y-1/2 transition-colors bg-[#0d0d0d] z-10",
+          "text-sm absolute -top-0.5 left-3 transform -translate-y-1/2 transition-colors bg-[#0d0d0d54]  z-10",
           errorFromForm
-            ? "text-red-400"
+            ? "text-red-400 z-20 bg-[#0d0d0d54]"
             : isFocused
               ? "text-green-500"
               : "text-white"
@@ -156,7 +156,7 @@ export default function RHFTextField({
             <>
               <div
                 className={clsx(
-                  "flex items-center rounded-md ring-1 bg-transparent transition-colors relative",
+                  "flex items-center rounded-md ring-1 bg-neutral-900 transition-colors relative",
                   ringColor,
                   sizeClasses[size]
                 )}
@@ -166,7 +166,7 @@ export default function RHFTextField({
                     <button
                       type="button"
                       onClick={() => setShowDropdown((prev) => !prev)}
-                      className="flex items-center gap-1 px-2 py-1 rounded-md text-white/80 hover:bg-neutral-800"
+                      className="flex items-center gap-1 px-2 py-1 rounded-md text-white/80 hover:bg-neutral-700"
                       tabIndex={-1}
                     >
                       {FlagComponent && (
@@ -186,7 +186,7 @@ export default function RHFTextField({
                       maxLength={maxLength}
                       disabled={disabled}
                       readOnly={readOnly}
-                      className="w-full bg-transparent p-2 text-white placeholder:text-neutral-100/40 focus:outline-none"
+                      className="w-full bg-neutral-900 p-2 text-white placeholder:text-neutral-100/40 focus:outline-none"
                       value={localNumber}
                       onChange={(e) => {
                         const val = e.target.value.replace(/\D/g, "");
@@ -212,7 +212,7 @@ export default function RHFTextField({
                             <button
                               key={c.code}
                               type="button"
-                              className="w-full flex items-center gap-2 px-3 py-2 text-sm text-white hover:bg-neutral-800"
+                              className="w-full flex items-center gap-2 px-3 py-2 text-sm text-white hover:bg-neutral-900"
                               onClick={() => {
                                 setCountry(c.code as CountryCode);
                                 setShowDropdown(false);
@@ -241,7 +241,7 @@ export default function RHFTextField({
                       maxLength={maxLength}
                       disabled={disabled}
                       readOnly={readOnly}
-                      className="w-full bg-transparent p-2 text-white placeholder:text-neutral-100/40 focus:outline-none"
+                      className="w-full bg-neutral-900 p-2 text-white placeholder:text-neutral-100/40 focus:outline-none"
                       onFocus={() => setIsFocused(true)}
                       onBlur={() => {
                         setIsFocused(false);

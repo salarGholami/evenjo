@@ -77,7 +77,7 @@ export default function RegisterForm({ onSubmit }: Props) {
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit(onSubmitHandler)}
-        className="w-full max-w-sm text-white my-12 md:my-10 p-6"
+        className="w-full max-w-sm text-white p-6"
         noValidate
       >
         {/* لوگو */}
@@ -199,8 +199,8 @@ export default function RegisterForm({ onSubmit }: Props) {
           disabled={!isValid || isSubmitting}
           className={`w-full rounded-md py-3 font-semibold transition-colors ${
             !isValid || isSubmitting
-              ? "bg-purple-700 cursor-not-allowed"
-              : "bg-purple-500 hover:bg-purple-600"
+              ? "bg-tint-600 cursor-not-allowed"
+              : "bg-tint-400 hover:bg-tint-500"
           }`}
         >
           {isSubmitting ? "Submitting..." : "Register"}
@@ -209,7 +209,7 @@ export default function RegisterForm({ onSubmit }: Props) {
         {/* لینک لاگین */}
         <p className="mt-4 text-center text-xs text-neutral-400">
           Already have an account?{" "}
-          <a href="/login" className="text-purple-400 hover:underline">
+          <a href="/login" className="text-tint-400 hover:underline">
             Log in
           </a>
         </p>
