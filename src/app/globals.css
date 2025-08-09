@@ -1,4 +1,11 @@
 @import "tailwindcss";
+/* @import 'flag-icon-css/css/flag-icon.min.css'; */
+
+body {
+  background: #0d0d0d;
+  color: white;
+  user-select: none;
+}
 
 @theme {
   /* ========================= COLORS =========================  */
@@ -205,7 +212,7 @@
 }
 
 /* ========================= ICONOGRAPHY ==========================  */
-/* ======== Icon Styles ======== */ 
+/* ======== Icon Styles ======== */
 .icon-sm {
   @apply w-4 h-4; /* 16px */
 }
@@ -214,4 +221,40 @@
 }
 .icon-lg {
   @apply w-6 h-6; /* 24px */
+}
+
+.link-active-glow {
+  position: relative;
+  color: #fff;
+}
+
+.link-active-glow::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180%;
+  height: 220%;
+  background: radial-gradient(
+    ellipse at center top,
+    var(--color-tint-500),
+    transparent 70%
+  );
+  filter: blur(25px);
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 9999px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+button {
+  cursor: pointer;
 }
