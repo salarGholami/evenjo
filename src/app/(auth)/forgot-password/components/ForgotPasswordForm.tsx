@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { forgotPasswordSchema } from "@/lib/validation/forgotPasswordSchema";
@@ -10,9 +9,10 @@ import clsx from "clsx";
 import RHFSubmitButton from "@/components/ui/form/RHFSubmitButton";
 import RHFTextField from "@/components/ui/Input/RHFTextField";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function ForgotPasswordForm() {
-  const [, setType] = useState<"email" | "phone">("email");
+  const router = useRouter();
 
   const form = useForm<ForgotPasswordFields>({
     resolver: yupResolver(forgotPasswordSchema),
@@ -34,7 +34,6 @@ export default function ForgotPasswordForm() {
   const currentType = watch("type");
 
   const switchType = (newType: "email" | "phone") => {
-    setType(newType);
     setValue("type", newType);
     if (newType === "email") {
       setValue("phone", "");
@@ -44,7 +43,17 @@ export default function ForgotPasswordForm() {
   };
 
   const onSubmit: SubmitHandler<ForgotPasswordFields> = async (data) => {
-    console.log("Sending reset request:", data);
+    const value = data.type === "email" ? data.email : data.phone;
+
+    await new Promise((r) => setTimeout(r, 1000));
+
+    // OTP ساختگی در localStorage ذخیره می‌شود
+    const fakeOtp = "123456";
+    localStorage.setItem("otp", fakeOtp);
+
+    router.push(
+      `/verify?type=${encodeURIComponent(data.type)}&value=${encodeURIComponent(value)}`
+    );
   };
 
   return (
@@ -65,17 +74,19 @@ export default function ForgotPasswordForm() {
           </div>
 
           <h1 className="w-full text-xl flex justify-center items-center">
-            Forgot your password ?
+            Forgot your password?
           </h1>
 
           <p className="mb-8 md:mb-5 text-center text-neutral-400 text-sm">
-            Please enter the phone number associated with your account and we'll
-            send you a verification code.
+            Please enter the{" "}
+            {currentType === "email" ? "email address" : "phone number"}{" "}
+            associated with your account and we&apos;ll send you a verification
+            code.
           </p>
         </div>
 
         <div className="space-y-8 flex flex-col">
-          <div className="flex bg-Neutral-800 rounded-md overflow-hidden p-1">
+          <div className="flex bg-neutral-800 rounded-md overflow-hidden p-1">
             {(["email", "phone"] as const).map((val) => (
               <button
                 key={val}
@@ -85,7 +96,7 @@ export default function ForgotPasswordForm() {
                   "flex-1 px-4 py-2 rounded-md border text-sm transition border-none",
                   currentType === val
                     ? "bg-neutral-700 text-white border-neutral-700"
-                    : "bg-transparent text-white  hover:bg-gray-800"
+                    : "bg-transparent text-white hover:bg-neutral-800"
                 )}
               >
                 {val === "email" ? "Email" : "Phone"}
@@ -116,7 +127,7 @@ export default function ForgotPasswordForm() {
           )}
 
           <RHFSubmitButton isLoading={isSubmitting}>
-            Get veification code
+            Get verification code
           </RHFSubmitButton>
         </div>
       </form>

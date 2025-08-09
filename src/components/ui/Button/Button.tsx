@@ -23,7 +23,7 @@ export default function Button({
   return (
     <button
       {...props}
-      className={clsx(baseClass, variantClass, className)} 
+      className={clsx(baseClass, variantClass, className)}
     >
       {leftIcon && <span className={styles["btn-icon-left"]}>{leftIcon}</span>}
       {children && <span>{children}</span>}
